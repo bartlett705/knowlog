@@ -1,0 +1,171 @@
+April 2016
+----------
+Learning JS
+
+-Bracket vs. Dot notation
+	+ use dots for actual names of properties
+	+ use brackets for var names that must be resolved, or strings w/ spaces
+	+ FUCKING SEMICOLONS
+
+-Regular expressions
+	\s : whitespace
+	\S : non-whitespace
+	\d : one digit
+	\d+ : many digits
+
+-Ajax
+	+ use jQuery to target classes OR IDs using . or # (don't forget(""))
+	+ FUCKING SEMICOLONS
+	+ Javascript sucks my fucking ballsack
+	+ use json.forEach method to simply iterate through the elements in a json object (which may contain many json objects within it)
+
+Created a tribute page, took another look at the portfolio, and made a random quote slinger.
+
+[5 May 2016 20:49] IN  : Playing TIS-100.  Great game.
+[5 May 2016 23:53] OUT : What a dumb game.
+[6 May 2016 20:00] IN  : FreeCodeCamp Weather project
+[6 May 2016 23:59] OUT : Done and done, including reflection
+[7 May 2016 22:30] IN  : Spun up a droplet, tried to install flask
+[8 May 2016 01:30] OUT
+[9 May 2016 15:30] IN  : Flask Training, first python web app
+
+Started using web app to log time, but will continue putting insights here.
+
+python + SQL is powerful as shit, and being able to render templates in flask makes it all that more useful.
+Git branches are a way to work on an isolated copy of a project, without making a million full copies of it, since differences between branches are manifested in the working directory based on commits, and which brach you have 'checked out'.
+
+with SQLAlchemy, at least, placing an object that represents a class linked via backref in the backref-created field will place the linked value from the specified class in that same field!  for instance, with a user table and post table:
+IN USER CLASS we have posts = db.relationship('Post', backref='author')
+in the POST CLASS we initialize user_id as db.ForeignKey('user.id')
+
+now we can write p.author.handle, equivalent to user.handle for a particular post.
+also, user.posts.all() will return a list of the post objects.
+Whew.
+
+relational databases!
+
+A simple trick to avoid double POST requests when the user refreshes is to make sure an issue a redirect after the post, making the last request now a GET
+
+TODO:
+-make modal header/footer border match the rest
+-Make edit and delete appear on your own posts
+
+Pretty funky - I used javascript to go back through the page and fix the timestamps inserted by flask/jinja. Why?  It MUST run client-side, since only the client knows what their timezone is!
+
+---
+[27 May 2016]ish.
+When attempting recursion, make sure the RESULTS of recursion are saved somewhere, otherwise...they get lost!
+
+[28 Jun 2016] Halfway decent dishes from menu generator v0.1:
+baked wood-ear mushrooms, beer, iberico ham, and mugwort, with candy-cane beets and cebollita dip
+filet of cats, wood-ear mushrooms, gnocchi, and guanciale, with beer and scallion sauce
+
+[TODO] Spiff up the menu layouts with borders for the venue div.
+
+ to 1469069354
+
+Functional Javascript:
+----------------------
+
+Array.map(function(value, index, arr)[, ]) runs on each value in Array. 1:1 sizing.
+
+- Remember callbacks should ONLY affect the value(s) they are passed.
+- The range of elements processed by map is set before the first invocation of callback. Elements which are appended to the array after the call to map begins will not be visited by callback. If existing elements of the array are changed, or deleted, their value as passed to callback will be the value at the time map visits them; elements that are deleted are not visited.
+
+Array.filter(function(value, index, arr) must return a boolean; filter will return only those values that return True within function(value). Don't return the value itself.
+
+Array.reduce(function(previous, current, current_index, arr){}, startval) returns the final value of the 'accumulator' named here as 'previous' after it is run on every item in Array (enumerated as 'current')
+The second argument to the function call, startval, is the initial value of the 'accumulator' 'previous', when current = Array[0].
+
+How to use reduce to expand an array, rather than 'reduce' it is shown below.  This works because the newArray 'accumulator' gets returned, and can be mutated with push (unlike in map, where we return individual elements in each go-round, which enforces the consistency of size between input and output).
+
+var numbers = [1, 2, 3, 4];
+
+var newNumbers = numbers.reduce(function(newArray, number){
+    newArray.push(number);
+
+    if(number % 2 == 0) {
+        /* Add it a second time. */
+        newArray.push(number);
+    }
+
+    return newArray; /* This is important! Always remember to return the NEW 'total' value, even if it is the same array */
+}, []);
+
+console.log("The final numbers are", newNumbers); // [1, 2, 2, 3, 4, 4]
+
+- The same trick also works with objects - however, in that case you'd specify {} as starting value, and you'd use property assignment rather than .push.
+
+ - With all three of these functions, you can access the current index (very useful), and the starting array using the optional arguments to the callback function.  HOWEVER, if you need to reference the starting array, you are PROBABLY DOING SOMETHING WRONG.  Re-think the approach.
+
+- Array.forEach(callback(value, index, arr){}) is useful instead of a for loop when you really JUST want to create a side-effect (like adding or deleting a DOM element).  It has the advantage over a for loop of creating a scope within the callback that prevents issues with asynchronous events changing the elements of the object between the start and end of each run through the loop.
+
+- Function values are actually objects which inherit from Function.prototype, so you can actually add properties and store values on them just like any other object.  This is because they are 'first class functions', which means they can be stored as variables, properties on objects, or passed to other functions as arguments (as in the case of callback or recursion).
+
+- A 'higher-order' function is one that takes and/or returns a function as one of its arguments.
+
+- Recursion can be used to perform reduce this way: perform the function on the initial variable and the first element of the reduced-array, then return a copy of the reduce function with the new 'result' as the initial value, and a sliced-down copy of the array to continue reducing.  DON'T FORGET to return the resulting reduced value at the end.
+
+
+[[BuildWithCode 21-Jul-2016]]
+---
+
+[Backyard 20 August: Codesmith signup?]
+One of the big avantages of Go over Python is that it is a statically-typed language, which means that, among other things, calls to functions with incorrect parameter type or number will generate a compile error, rather than the 'looser' dynamically typed languages, where the issue may not manifest until a runtime error (bigger deal with larger codebases/bigger teams)
+
+[19 Sep 2016]
+
+Possible Tech Talk Topics:
+
+[Closures]
+
+Closures are a way to wrap a function in a particular execution context, including the state of variables at the time the closure is generated.  This is to allow them access to values that would normally be outside the scope of the bare called function.
+
+[Promises]
+
+Promises are a way to write asynchronous code synchonously.  Instead of relying on callbacks to prevent race conditions, we can use promises as a placeholder for values to be filled upon the completion of an asynchronous task, for instance an http request.
+
+Promises look and behave in many ways like traiditonal variables, but any code that requires them will wait until the promise is 'fulfilled' to execute.
+
+This is important primarily for making highly coupled, asynchronous code more read-able.
+
+[Wed 28 Sep 2016]
+after day 3 of CodeSmith
+thoughts:
+    -customized water bottles/mugs (cute coding challenge to get/buy another one if yours breaks / you want a gift to give (_marginally_ above cost))
+    -did will REALLY lose his visa?
+    -Day Zero and Zero Days (hiking example)
+    -portable EL wire logo
+
+[Tue 11 Oct 2016]
+Week 3, day 2
+So tired of feedback and listening to the same people ask questions that have already been answered.
+
+Anyway, things that need fleshing out:
+	- Unit 2, Data Structures
+		+ Linked List
+		+ Hash Table
+		+ Tree
+			. Binary Search Tree
+			. Balanced " "
+	- Algos
+		+ Merge Sort
+		+ Insertion Sort
+		+ Recursion
+			. parser (parens checker)
+	- Unit 6 React
+		+ Component Life-cycle
+		+ State and Props
+			Central concept of 'top-down' data flow in React.  State should be maintained in as few places as possible, and passed down to state-less 'presentational' components as props as needed.
+		+ VDOM
+			The core strength of React is its use of the VDOM - a Javascript-based representation of the DOM that can be manipulated and diffed *much* faster than actual DOM manipulation via the web API. Actual DOM nodes will be re-rendered from JSX as needed only in a properly-designed react app.
+		+ Scope of use
+			React is only a 'View' on its own - libraries like Redux are needed to properly manage persistent models.
+		+ Mixin style - JSX is like putting XML in your JS.
+	- Unit 7 Angular
+		+ Full MVC architecture
+			Ang.JS employs some unique metaphors, which take getting used to, naturally.  For instance, factories, services, and providers are all capable of serving as a place to put the model(s), but have different strengths and design patterns.  Heck, you can put state in your controllers if you like; ang won't tell you not to.
+		+ Angular isn't tiny, and its digest loop forces you to use built-in methods for async events, intervals and the like, or risk weirdness.
+		+ Mixin style - custom directives and template-ing in partials is like putting JS in your HTML
+
+[23 DEC2016] QUIRKS
