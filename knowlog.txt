@@ -169,3 +169,58 @@ Anyway, things that need fleshing out:
 		+ Mixin style - custom directives and template-ing in partials is like putting JS in your HTML
 
 [23 DEC2016] QUIRKS
+[12 FEB 2017]
+React
+
+	- You can pass anything to a react component as props.children, not just things that react can render.  The component must transform them into something react can render, however.
+	- Render components conditionally by &&ing them with a boolean:
+	```js
+		<div>
+		  {showHeader && <Header />}
+		  <Content />
+		</div>
+	```
+
+[24 FEB 2017]
+BGC #: 66333844
+
+[28 FEB 2017]
+
+## 3 Kinds of Data
+
+1. Ordinal (comparable)
+2. Quantitative (comparable)
+3. Nominal (non-comparable)
+
+Some data relations perceived more accurately than others, depending on the attribute used to display them.  Location is always best, but the ordering changes from there.  For instance, while Hue is a poor indicator of qualitative data, it is an *excellent* indicator of categories (nominal data).
+
+# Visualization types
+## Bar Chart
+	- Benefits from location + length
+	- Vertical - quantitative, dependent variable
+	- Horizontal - discrete or nominal, independent variable
+## Line Chart
+	- Position, but not length
+	- Vertical - continuous dependent quantitative variable
+	- Horizontal - quantitative, continuous independent variable (ie cont. time)
+## Scatter plot
+	- Position with a skosh of density
+	- Both axes are independent, quantitative vars
+## Gantt Chart - like a bar chart, but bases don't align with an axis
+	- Position and length, but 2 independent variables (often used to show timelines / processes)
+	- Vertical - discrete/nominal independent var
+	- Horizontal - quantitative independent variable
+## Table
+	- Position only
+	- 2 nominal independent variables on the axes
+# Parallel Coords as a way to display 3D+ data
+	- Make x and y parallel...points become lines.
+	- Interesting: if points are co-linear, their lines will converge in parallel coords.
+
+# Treemaps
+	- Schneiderman, 1992
+	- Map Qty to area
+	- Color used to differentiate areas.
+	- Shading delineates heirarchical regions.
+	- Hue nominal category axis
+	
