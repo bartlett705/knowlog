@@ -223,4 +223,9 @@ Some data relations perceived more accurately than others, depending on the attr
 	- Color used to differentiate areas.
 	- Shading delineates heirarchical regions.
 	- Hue nominal category axis
-	
+## computing Treemaps
+	- Starting with the bottom, assign each node its QTY.
+	- assign each parent the sum of its child QTYs from bottom to top.
+	- Assign each child the portion of its parent's QTY from top to bottom.
+	...
+	- Profit!
